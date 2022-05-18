@@ -5,6 +5,8 @@ Udacity Data Science Nanodegree - Disaster Response Pipeline Project
 
 
 
+[TOC]
+
 
 
 ## Installation
@@ -62,3 +64,8 @@ Overview of Train Dataset
 Example
 
 ![image-20220517233548612](README.assets/image-20220517233548612.png)
+
+## License
+
+[![License: MIT](README.assets/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
