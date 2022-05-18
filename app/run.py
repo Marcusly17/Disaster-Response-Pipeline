@@ -14,10 +14,10 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sqlalchemy import create_engine
 
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
-"""
-A class to check whether the first word of the sentence is verb,
-adding a new feature for the ML classifier
-"""
+    """
+    A class to check whether the first word of the sentence is verb,
+    adding a new feature for the ML classifier
+    """
     def starting_verb(self, text):
         sentence_list = sent_tokenize(text)
         
