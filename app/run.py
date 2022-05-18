@@ -1,6 +1,7 @@
 import json
 import plotly
 import pandas as pd
+import joblib
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize, sent_tokenize
@@ -9,7 +10,7 @@ from nltk import pos_tag
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+
 from sklearn.base import BaseEstimator, TransformerMixin
 from sqlalchemy import create_engine
 

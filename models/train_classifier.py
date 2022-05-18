@@ -162,7 +162,7 @@ def save_model(model, model_filepath):
     Save trained model as a pickle which can be loaded later
     
     """
-        pickle.dump(model, open(model_filepath,'wb'))
+    pickle.dump(model, open(model_filepath,'wb'))
     
 
 
