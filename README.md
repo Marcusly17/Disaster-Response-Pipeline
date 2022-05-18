@@ -3,12 +3,6 @@ Udacity Data Science Nanodegree - Disaster Response Pipeline Project
 
 ![image-20220517220546009](README.assets/image-20220517220546009.png)
 
-
-
-[TOC]
-
-
-
 ## Installation
 
 ### Dependencies
