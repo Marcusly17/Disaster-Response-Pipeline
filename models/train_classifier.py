@@ -24,7 +24,19 @@ import pickle
 
 
 def load_data(database_filepath):
-    # load data from database
+    """ 
+    Loading data 
+  
+    Return X, y, and categories name
+  
+        Parameters:
+            database_filepath (str): database filepath 
+
+        Returns:
+            X (DataFrame): feature columns
+            y (DataFrame): label columns
+            category_names (list): category names
+    """
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql("SELECT * FROM DisasterResponse", engine)
     
@@ -34,6 +46,15 @@ def load_data(database_filepath):
     return X, y, y.columns.tolist()
 
 def tokenize(text):
+    """ 
+    Normalize, tokenize and lemmatize function. 
+  
+        Parameters: 
+            text (str): Text for cleaning.
+    
+        Returns: 
+            clean_tokens (list): cleaned tokens for ML training.
+    """
     #nomalize
     text = re.sub(r"[^a-zA-Z0-9]", " ", text)
     stop_words = stopwords.words("english")
@@ -52,8 +73,16 @@ def tokenize(text):
 
 #build customized feature
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
+    """
+    A class to check whether the first word of the sentence is verb,
+    adding a new feature for the ML classifier
+    """
 
     def starting_verb(self, text):
+        """
+        return 1 if first word is verb, otherwise 0
+        
+        """
         sentence_list = sent_tokenize(text)
         
         for sentence in sentence_list:
@@ -75,6 +104,11 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
 
 
 def build_model():
+    """
+    Build Model funcion
+    
+    Create pipeline and use GridSearch
+    """
     pipeline = Pipeline([
         ('features', FeatureUnion([
 
@@ -100,15 +134,35 @@ def build_model():
     return model
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Evaluate model
+    
+    Use fit model to predict y 
+    
+    Print f1 score, precision, recall and accuracy for each categories
+    
+        Parameters:
+            model (GridSearchCV) : trained model
+            X_test (DataFrame) : test features
+            Y_test (DataFrame) : test label
+            category_names (list): category name
+            
+    """
     y_pred = model.predict(X_test)
     
+    #print model evaluvation result by categories
     for i, column in enumerate(category_names):
         print(column, "\n", classification_report(Y_test.values[:,i], y_pred[:,i]), "\n", \
               column, " accuracy_score: ", accuracy_score(Y_test.values[:,i], y_pred[:,i]),"\n",\
               "-"*65,"\n")
 
 def save_model(model, model_filepath):
-    pickle.dump(model, open(model_filepath,'wb'))
+    """
+    
+    Save trained model as a pickle which can be loaded later
+    
+    """
+        pickle.dump(model, open(model_filepath,'wb'))
     
 
 

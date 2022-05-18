@@ -4,6 +4,18 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    load files and merge
+    
+        Parameter:
+             messages_filepath (str) : message.csv
+             categories_filepath(str) : categories.csv
+             
+        Return:
+             df(DataFrame): merged file
+             
+    """
+    
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     # merge datasets
@@ -13,6 +25,22 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    
+    """
+    Clean df
+    
+    Expand categories columns and get dummies for each category
+    
+    Drop rows with related == 2 as no information can be extracted based on the value
+    
+    Drop duplicated rows.
+    
+        Parameter:
+            df(DataFrame): merged df
+        
+        Return:
+            df(DataFrame): cleaned df
+    """
     
     categories = df.categories.str.split(';', expand=True) # create a dataframe of the 36 individual category columns
     
@@ -50,6 +78,14 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    
+    """ 
+    Save cleaned DataFrame to a SQLite database. 
+  
+    Parameters: 
+        df (DataFrame):  cleaned dateframe
+        database_filename (str) : database filename
+    """
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('DisasterResponse', engine, index=False)
      
